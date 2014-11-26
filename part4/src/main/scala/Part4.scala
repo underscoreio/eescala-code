@@ -6,7 +6,7 @@ object Part4 extends App {
 
 
   trait IntList {
-    def findGt(target: Int): FindResult
+    // def findGreater(target: Int): FindResult
   }
   case object Empty extends IntList
   case class Cell(head: Int, tail: IntList) extends IntList
@@ -26,7 +26,7 @@ object Part4 extends App {
   // val a: IntList = Cell(1, Cell(2, Cell(3, Empty)))
   // val b: IntList = Empty
 
-  // println("The first number >= 2 in a is " + a.findGt(2))
-  // println("The first number >= 2 in b is " + b.findGt(2))
+  // println("The first number >= 2 in a is " + a.findGreater(2))
+  // println("The first number >= 2 in b is " + b.findGreater(2))
 
 }
