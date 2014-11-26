@@ -1,43 +1,43 @@
 object Part4 extends App {
 
-  trait Result
-  case class Finite(value: Int) extends Result
-  case object Undefined extends Result
+  trait FindResult
+  case class Found(value: Int) extends FindResult
+  case object NotFound extends FindResult
 
-  trait Calculation {
-    def calculate: Result
+  trait IntList {
+    def findGt(target: Int): FindResult = {
+      this match {
+        case Empty => NotFound
+        case Cell(h, t) =>
+          if(h >= target) {
+            Found(h)
+          } else {
+            t.findGt(target)
+          }
+      }
+    }
+
+    def findGt2(target: Int): FindResult
   }
 
-  case class Addition(a: Calculation, b: Calculation) extends Calculation {
-    def calculate = (a.calculate, b.calculate) match {
-      case (Finite(a), Finite(b)) => Finite(a + b)
-      case _                      => Undefined
+  case object Empty extends IntList {
+    def findGt2(target: Int) = NotFound
+  }
+
+  case class Cell(head: Int, tail: IntList) extends IntList {
+     def findGt2(target: Int) = {
+      if(head >= target) {
+        Found(head)
+      } else {
+        tail.findGt(target)
+      }
     }
   }
 
-  case class Multiplication(a: Calculation, b: Calculation) extends Calculation {
-    def calculate = (a.calculate, b.calculate) match {
-      case (Finite(a), Finite(b)) => Finite(a * b)
-      case _                      => Undefined
-    }
-  }
+  val a: IntList = Cell(1, Cell(2, Cell(3, Empty)))
+  val b: IntList = Empty
 
-  case class Division(a: Calculation, b: Calculation) extends Calculation {
-    def calculate = (a.calculate, b.calculate) match {
-      case (_,         Finite(0)) => Undefined
-      case (Finite(a), Finite(b)) => Finite(a / b)
-      case _                      => Undefined
-    }
-  }
-
-  case class Number(value: Int) extends Calculation {
-    def calculate = Finite(value)
-  }
-
-  val a = Addition(Number(1), Multiplication(Number(2), Number(3)))
-  val b = Division(Number(1), Number(0))
-
-  println("a is " + a.calculate)
-  println("b is " + b.calculate)
+  println("The first number >= 2 in a is " + a.findGt(2))
+  println("The first number >= 2 in b is " + b.findGt(2))
 
 }

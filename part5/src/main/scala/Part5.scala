@@ -11,7 +11,16 @@ object Part5 extends App {
   // Exercise 2
   // ----------
 
+  trait FindResult
+  case class Found(value: Int) extends FindResult
+  case object NotFound extends FindResult
+
   trait IntList {
+    def find(f: Int => Boolean): FindResult = this match {
+      case Cell(h, t) => if(f(h)) Found(h) else t.find(f)
+      case Empty      => NotFound
+    }
+
     def filter(f: Int => Boolean): IntList = this match {
       case Cell(h, t) => if(f(h)) Cell(h, t.filter(f)) else t.filter(f)
       case Empty      => Empty
@@ -28,6 +37,9 @@ object Part5 extends App {
 
   val a: IntList = Cell(1, Cell(2, Cell(3, Empty)))
   val b: IntList = Empty
+
+  println("first even number in a is " + a.find(a => a % 2 == 0))
+  println("first odd number in b is " + a.find(b => b % 2 == 1))
 
   println("even numbers in a are " + a.filter(a => a % 2 == 0))
   println("odd numbers in b are " + a.filter(b => b % 2 == 1))
