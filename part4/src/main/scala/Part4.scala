@@ -1,8 +1,15 @@
 object Part4 extends App {
 
-  trait Calculation {
-    def calculate: Int
+  trait FindResult
+  // etc...
+
+
+
+  trait IntList {
+    def findGt(target: Int): FindResult
   }
+  case object Empty extends IntList
+  case class Cell(head: Int, tail: IntList) extends IntList
 
 
 
@@ -16,19 +23,10 @@ object Part4 extends App {
   // Tests for exercise 1
   // --------------------
 
-  // val a = Addition(Number(1), Multiplication(Number(2), Number(3)))
-  // val a = Division(Number(1), Number(0))
+  // val a: IntList = Cell(1, Cell(2, Cell(3, Empty)))
+  // val b: IntList = Empty
 
-  // println("a is " + a.calculate)
-  // println("b is " + b.calculate)
-
-  // Additional code for exercise 2
-  // ------------------------------
-
-  // Move this to the top of the file when you get here:
-
-  // trait Result
-  // case class Finite(value: Int) extends Result
-  // case object Undefined extends Result
+  // println("The first number >= 2 in a is " + a.findGt(2))
+  // println("The first number >= 2 in b is " + b.findGt(2))
 
 }

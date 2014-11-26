@@ -31,11 +31,14 @@ object Part5 extends App {
   // val a: IntList = Cell(1, Cell(2, Cell(3, Empty))
   // val b: IntList = Empty
 
+  // println("first even number in a is " + a.find(a => a % 2 == 0))
+  // println("first odd number in b is " + a.find(b => b % 2 == 1))
+
+  // Tests for optional exercises
+  // ----------------------------
+
   // println("even numbers in a are " + a.filter(???))
   // println("odd numbers in b are " + a.filter(???))
-
-  // Tests for optional exercise
-  // ---------------------------
 
   // println("doubled numbers from a are " + a.map(???))
   // println("doubled numbers from b are " + a.map(???))
